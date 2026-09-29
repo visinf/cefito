@@ -1,0 +1,56 @@
+# CEFITO on CrossTask, planning horizon T=3 (Tab. 1, left).
+#
+# The EMA constants are set for batch_size 128 on this split (85 optimiser steps
+# per epoch): ema_decay gives a 90-epoch averaging time constant and
+# step_start_ema a 15-epoch warm-up. Rescale both if you change the batch size.
+dataset: crosstask
+horizon: 3
+num_actions: 133
+num_tasks: 18
+run_name: crosstask_t3
+
+model:
+  observation_dim: 1536
+  hidden_dim: 384
+  depth: 4
+  num_heads: 6
+  mlp_ratio: 4.0
+  causal_attention: true
+
+loss:
+  num_negatives: 50
+  hard_negative_ratio: 0.8
+  min_margin: 0.05
+  max_margin: 0.15
+  aux_weight: 1.0
+  permutation_negative_ratio: 0.08
+  margin_order_weight: 0.7
+
+train:
+  epochs: 200
+  batch_size: 128
+  lr: 5.0e-4
+  observation_noise: 0.30
+  weight_decay: 0.075
+  ema_decay: 0.99738562
+  step_start_ema: 1275
+  update_ema_every: 20
+  eval_every: 3
+  num_workers: 0
+  pin_memory: true
+  seed: 25
+
+eval:
+  batch_size: 32
+  chunk_size: 50000
+  oracle_task: false
+
+# The task classifier is trained once per dataset on the T=3 training split and
+# labels both the T=3 and T=4 test splits (run/task_labels.sh). The T=4 split
+# holds fewer training windows, since a window needs four consecutive steps.
+task_classifier:
+  epochs: 150
+  batch_size: 256
+  lr: 3.0e-4
+  weight_decay: 0.01
+  seed: 25

@@ -1,0 +1,28 @@
+# Experiment output
+runs/
+wandb/
+*.pth
+*.pth.tar
+
+# Downloaded or generated next to the annotations; not versioned
+dataset/*/action_embeddings*.npy
+dataset/CrossTask/crosstask_features/
+dataset/COIN/full_npy/
+dataset/NIV/processed_data/
+
+# Environments
+cefito-venv/
+.venv/
+uv.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store

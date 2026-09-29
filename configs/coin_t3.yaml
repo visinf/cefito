@@ -1,0 +1,48 @@
+# CEFITO on COIN, planning horizon T=3 (Tab. 2, left).
+dataset: coin
+horizon: 3
+num_actions: 778
+num_tasks: 180
+run_name: coin_t3
+
+model:
+  observation_dim: 1536
+  hidden_dim: 384
+  depth: 4
+  num_heads: 6
+  mlp_ratio: 4.0
+  causal_attention: true
+
+loss:
+  num_negatives: 50
+  hard_negative_ratio: 0.8
+  min_margin: 0.01
+  max_margin: 0.1
+  aux_weight: 1.0
+
+train:
+  epochs: 200
+  batch_size: 256
+  lr: 5.0e-4
+  weight_decay: 1.0e-3
+  ema_decay: 0.995
+  step_start_ema: 400
+  update_ema_every: 10
+  eval_every: 3
+  num_workers: 0
+  seed: 50
+
+eval:
+  batch_size: 32
+  chunk_size: 50000
+  oracle_task: false
+
+# The task classifier is trained once per dataset on the T=3 training split and
+# labels both the T=3 and T=4 test splits (run/task_labels.sh). The T=4 split
+# holds fewer training windows, since a window needs four consecutive steps.
+task_classifier:
+  epochs: 150
+  batch_size: 256
+  lr: 3.0e-4
+  weight_decay: 0.01
+  seed: 50

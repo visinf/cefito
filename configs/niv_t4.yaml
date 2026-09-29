@@ -1,0 +1,40 @@
+# CEFITO on NIV, planning horizon T=4. Same recipe as niv_t3.yaml.
+dataset: niv
+horizon: 4
+num_actions: 48
+num_tasks: 5
+run_name: niv_t4
+
+model:
+  observation_dim: 1536
+  hidden_dim: 384
+  depth: 4
+  num_heads: 6
+  mlp_ratio: 4.0
+  causal_attention: true
+
+loss:
+  num_negatives: 50
+  hard_negative_ratio: 0.8
+  min_margin: 0.01
+  max_margin: 0.1
+  aux_weight: 1.0
+
+train:
+  epochs: 200
+  batch_size: 32
+  lr: 5.0e-5
+  weight_decay: 1.0e-3
+  ema_decay: 0.995
+  step_start_ema: 400
+  update_ema_every: 10
+  eval_every: 3
+  num_workers: 0
+  seed: 50
+
+eval:
+  batch_size: 32
+  chunk_size: 50000
+  # NIV has no task-classifier predictions in its annotation files, so
+  # planning is always constrained by the ground-truth task here.
+  oracle_task: true

@@ -1,0 +1,36 @@
+# Where each dataset's files live. Relative paths are resolved against the
+# repository root; every value may use the {root} and {horizon} placeholders
+# and environment variables. Point CEFITO at another copy of this file with
+# `--paths my_paths.yaml` or `export CEFITO_PATHS=my_paths.yaml`.
+#
+#   train_json / val_json  annotation files. val_json is the
+#                          test split with task-classifier predictions stamped in.
+#   taxonomy               task -> {action id: action name}; defines A(c).
+#   action_embeddings      written by scripts/extract_action_embeddings.py.
+#   feature_root           directory holding the S3D feature files. null reads
+#                          them from the path stored in each annotation record,
+#                          i.e. the dataset/<name>/... layout shown in the README.
+
+crosstask:
+  root: dataset/CrossTask
+  train_json: "{root}/train_list_{horizon}_133.json"
+  val_json: "{root}/test_list_{horizon}_133_with_predictions.json"
+  taxonomy: "{root}/crosstask_taxonomy_133.json"
+  action_embeddings: "{root}/action_embeddings_133.npy"
+  feature_root: null
+
+coin:
+  root: dataset/COIN
+  train_json: "{root}/coin_train_70_{horizon}.json"
+  val_json: "{root}/coin_test_30_{horizon}_with_predictions.json"
+  taxonomy: "{root}/coin_taxonomy.json"
+  action_embeddings: "{root}/action_embeddings.npy"
+  feature_root: null
+
+niv:
+  root: dataset/NIV
+  train_json: "{root}/train70_{horizon}.json"
+  val_json: "{root}/test30_{horizon}.json"
+  taxonomy: "{root}/niv_taxonomy.json"
+  action_embeddings: "{root}/action_embeddings.npy"
+  feature_root: null
