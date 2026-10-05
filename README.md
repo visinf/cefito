@@ -32,10 +32,6 @@ initial state into a given goal state. CEFITO splits that into two problems:
    actions that task admits. Every sequence in that restricted space is scored,
    and the lowest-energy one is the plan.
 
-```
-plan = argmin ‖ P_θ(x_s, a_1:T) − x_g ‖₂   over a_1:T ∈ A(ĉ)^T
-```
-
 ## Install
 
 ```bash
